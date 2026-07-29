@@ -1,0 +1,60 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --primary: #2563EB;
+  --secondary: #A855F7;
+  --accent: #06B6D4;
+  --magenta: #D946EF;
+
+  --success: #22C55E;
+  --warning: #F59E0B;
+  --danger: #EF4444;
+
+  --bg: #050816;
+  --surface: #0B1225;
+  --card: #111827;
+
+  --border: #23304D;
+
+  --text: #FFFFFF;
+  --text-secondary: #A0AEC0;
+
+  --gradient-primary: linear-gradient(135deg, #2563EB, #A855F7);
+  --gradient-secondary: linear-gradient(135deg, #06B6D4, #2563EB);
+  --gradient-premium: linear-gradient(135deg, #7C3AED, #EC4899);
+
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-xl: 32px;
+
+  --shadow-soft: 0 8px 25px rgba(37,99,235,.15);
+  --shadow-premium: 0 20px 60px rgba(168,85,247,.35);
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Space Grotesk', sans-serif;
+}
+
+/* Custom Scrollbar for dark theme */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg); 
+}
+::-webkit-scrollbar-thumb {
+  background: var(--surface); 
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--border); 
+}
