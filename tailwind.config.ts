@@ -8,13 +8,20 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        primary: "var(--primary)",
-        secondary: "var(--secondary)",
-        accent: "var(--accent)",
+        primary: "var(--electric-blue)",
+        secondary: "var(--royal-purple)",
+        accent: "var(--magenta)",
         magenta: "var(--magenta)",
         success: "var(--success)",
         warning: "var(--warning)",
         danger: "var(--danger)",
+        info: "var(--info)",
+        
+        midnight: "var(--midnight-navy)",
+        silver: "var(--silver)",
+        gray: "var(--gray)",
+        darkGray: "var(--dark-gray)",
+        
         bg: "var(--bg)",
         surface: "var(--surface)",
         card: "var(--card)",
@@ -24,7 +31,6 @@ const config: Config = {
       },
       backgroundImage: {
         "gradient-primary": "var(--gradient-primary)",
-        "gradient-secondary": "var(--gradient-secondary)",
         "gradient-premium": "var(--gradient-premium)",
       },
       borderRadius: {
@@ -35,16 +41,19 @@ const config: Config = {
       },
       boxShadow: {
         soft: "var(--shadow-soft)",
+        softBlue: "var(--shadow-soft-blue)",
         premium: "var(--shadow-premium)",
       },
       fontFamily: {
-        heading: ["Space Grotesk", "sans-serif"],
-        body: ["Inter", "sans-serif"],
+        heading: ["var(--font-space-grotesk)", "Space Grotesk", "sans-serif"],
+        body: ["var(--font-inter)", "Inter", "sans-serif"],
+        mono: ["var(--font-jetbrains-mono)", "JetBrains Mono", "monospace"],
       },
       animation: {
         'float': 'float 4s ease-in-out infinite',
         'float-delayed': 'float 4s ease-in-out 2s infinite',
         'float-slow': 'float 6s ease-in-out infinite',
+        'skeleton': 'skeleton-loading 1s linear infinite alternate',
       },
       keyframes: {
         float: {

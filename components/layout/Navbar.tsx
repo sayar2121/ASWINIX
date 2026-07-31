@@ -4,10 +4,14 @@ import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Menu, X } from 'lucide-react';
+import { Button } from '@/components/ui/Button';
+import { GlobalSearch } from '@/components/features/GlobalSearch';
+import { NotificationsPanel } from '@/components/features/NotificationsPanel';
 
 export default function Navbar() {
   const pathname = usePathname();
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isNotifOpen, setIsNotifOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const navLinks = [
@@ -24,68 +28,100 @@ export default function Navbar() {
   ];
 
   return (
-    <nav className="sticky top-0 z-50 w-full border-b border-border bg-bg/80 backdrop-blur-md">
-      <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-        {/* Logo */}
-        <Link href="/" className="flex items-center gap-3">
-          <Image src="/images/ASWINIX_LOGO.jpeg" alt="ASWINIX Logo" width={120} height={120} className="rounded-full w-16 h-16 xl:w-[120px] xl:h-[120px] transition-all" />
-          <div className="flex flex-col hidden sm:flex">
-            <span className="font-heading font-bold text-xl tracking-wide leading-none">ASWINIX</span>
-            <span className="text-[10px] text-textSecondary uppercase tracking-widest mt-1">Race. Bet. Win.</span>
-          </div>
-        </Link>
+    <>
+      {/* Desktop Header */}
+      <header className="sticky top-0 z-50 w-full h-[80px] bg-[#0A0D14] border-b border-border hidden lg:flex items-center justify-between px-6 xl:px-10">
+        {/* Logo (Left) */}
+        <div className="flex items-center justify-start min-w-[200px]">
+          <Link href="/" className="flex items-center gap-3">
+            <Image src="/images/ASWINIX_LOGO.jpeg" alt="ASWINIX Logo" width={56} height={56} className="rounded-full w-14 h-14" />
+            <div className="flex flex-col">
+              <span className="font-heading font-bold text-[22px] tracking-wide text-white leading-none">ASWINIX</span>
+              <span className="text-[9px] text-textSecondary uppercase tracking-[0.2em] mt-1">Race. Bet. Win.</span>
+            </div>
+          </Link>
+        </div>
 
-        {/* Desktop Navigation */}
-        <div className="hidden xl:flex items-center gap-6">
+        {/* Desktop Navigation (Center) */}
+        <nav className="flex-1 flex items-center justify-center h-full gap-6 xl:gap-8">
           {navLinks.map((link) => {
-            const isActive = pathname === link.path;
+            const isActive = pathname === link.path || (link.path !== '/' && pathname.startsWith(link.path));
             return (
               <Link 
                 key={link.name}
                 href={link.path} 
-                className={`text-xs font-bold uppercase tracking-wider py-2 transition-colors ${
+                className={`relative flex items-center text-[11px] font-medium font-body uppercase tracking-wider h-full transition-all ${
                   isActive 
-                    ? 'text-primary border-b-2 border-primary' 
-                    : 'text-textSecondary hover:text-textPrimary'
+                    ? 'text-primary' 
+                    : 'text-textSecondary hover:text-white'
                 }`}
               >
                 {link.name}
+                {isActive && (
+                  <span className="absolute bottom-0 left-0 w-full h-[2px] bg-primary"></span>
+                )}
               </Link>
             );
           })}
-        </div>
+        </nav>
 
-        {/* Actions */}
-        <div className="hidden md:flex items-center gap-4">
-          <Link href="/login" className="px-6 py-2 rounded-full border border-border text-sm font-bold hover:bg-surface transition-colors">
-            LOG IN
+        {/* Actions (Right) */}
+        <div className="flex items-center justify-end min-w-[200px] gap-4">
+          <button 
+            onClick={() => setIsSearchOpen(true)}
+            className="w-10 h-10 rounded-full flex items-center justify-center text-textSecondary hover:text-white hover:bg-surface transition-colors"
+          >
+            <span className="material-symbols-rounded text-[22px]">search</span>
+          </button>
+          <button 
+            onClick={() => setIsNotifOpen(true)}
+            className="w-10 h-10 rounded-full flex items-center justify-center text-textSecondary hover:text-white hover:bg-surface transition-colors relative"
+          >
+            <span className="material-symbols-rounded text-[22px]">notifications</span>
+            <span className="absolute top-2 right-2 w-2 h-2 bg-primary rounded-full"></span>
+          </button>
+          <Link href="/dashboard/profile">
+            <div className="w-9 h-9 rounded-full bg-surface border border-border flex items-center justify-center overflow-hidden hover:border-primary transition-colors ml-2">
+              <span className="material-symbols-rounded text-textSecondary text-[20px]">person</span>
+            </div>
           </Link>
-          <Link href="/register" className="px-6 py-2 rounded-full bg-gradient-primary text-white text-sm font-bold hover:brightness-110 transition-all shadow-soft">
-            SIGN UP
-          </Link>
         </div>
+      </header>
 
-        {/* Mobile Menu Button */}
-        <button 
-          className="xl:hidden p-2 text-textSecondary hover:text-textPrimary"
-          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-        >
-          {isMobileMenuOpen ? <X className="w-8 h-8" /> : <Menu className="w-8 h-8" />}
-        </button>
-      </div>
+      {/* Mobile Top Header (Just Logo and Actions) */}
+      <header className="sticky top-0 z-50 w-full h-[60px] border-b border-border glass flex md:hidden items-center justify-between px-4">
+        <Link href="/" className="flex items-center gap-2">
+          <Image src="/images/ASWINIX_LOGO.jpeg" alt="ASWINIX Logo" width={40} height={40} className="rounded-full w-8 h-8" />
+          <span className="font-heading font-bold text-xl tracking-wider text-white">ASWINIX</span>
+        </Link>
+        <div className="flex items-center gap-2">
+          <button 
+            onClick={() => setIsSearchOpen(true)}
+            className="w-10 h-10 flex items-center justify-center text-textSecondary"
+          >
+            <span className="material-symbols-rounded">search</span>
+          </button>
+          <button 
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            className="w-10 h-10 flex items-center justify-center text-textSecondary"
+          >
+            <span className="material-symbols-rounded text-2xl">{isMobileMenuOpen ? 'close' : 'menu'}</span>
+          </button>
+        </div>
+      </header>
 
-      {/* Mobile Navigation Menu */}
+      {/* Mobile Menu Overlay */}
       {isMobileMenuOpen && (
-        <div className="xl:hidden border-t border-border bg-bg absolute w-full left-0 top-full shadow-premium pb-4">
-          <div className="flex flex-col px-4 py-2">
+        <div className="fixed inset-0 top-[60px] z-40 bg-bg/95 backdrop-blur-md md:hidden flex flex-col p-6 overflow-y-auto animate-fade-in">
+          <nav className="flex flex-col gap-6">
             {navLinks.map((link) => {
-              const isActive = pathname === link.path;
+              const isActive = pathname === link.path || (link.path !== '/' && pathname.startsWith(link.path));
               return (
                 <Link 
                   key={link.name}
                   href={link.path} 
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className={`py-4 border-b border-border/50 text-sm font-bold uppercase tracking-wider transition-colors ${
+                  className={`text-lg font-heading font-bold uppercase tracking-wider transition-colors ${
                     isActive ? 'text-primary' : 'text-textSecondary hover:text-white'
                   }`}
                 >
@@ -93,18 +129,24 @@ export default function Navbar() {
                 </Link>
               );
             })}
-            
-            <div className="flex flex-col gap-4 mt-6 md:hidden">
-              <Link href="/login" onClick={() => setIsMobileMenuOpen(false)} className="w-full text-center px-6 py-3 rounded-xl border border-border text-sm font-bold hover:bg-surface transition-colors">
-                LOG IN
-              </Link>
-              <Link href="/register" onClick={() => setIsMobileMenuOpen(false)} className="w-full text-center px-6 py-3 rounded-xl bg-gradient-primary text-white text-sm font-bold shadow-soft">
-                SIGN UP
-              </Link>
-            </div>
-          </div>
+            <div className="h-[1px] w-full bg-border my-2"></div>
+            <Link 
+              href="/dashboard/profile"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="text-lg font-heading font-bold uppercase tracking-wider text-textSecondary hover:text-white flex items-center gap-3"
+            >
+              <span className="material-symbols-rounded">person</span>
+              Profile
+            </Link>
+          </nav>
         </div>
       )}
-    </nav>
+
+
+
+      {/* Modals & Panels */}
+      <GlobalSearch isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
+      <NotificationsPanel isOpen={isNotifOpen} onClose={() => setIsNotifOpen(false)} />
+    </>
   );
 }
