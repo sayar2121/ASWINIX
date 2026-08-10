@@ -112,7 +112,7 @@ export default function Navbar() {
 
       {/* Mobile Menu Overlay */}
       {isMobileMenuOpen && (
-        <div className="fixed inset-0 top-[60px] z-40 bg-bg/95 backdrop-blur-md md:hidden flex flex-col p-6 overflow-y-auto animate-fade-in">
+        <div className="fixed inset-0 top-[60px] z-40 bg-bg/95 backdrop-blur-md md:hidden flex flex-col p-6 overflow-y-auto animate-fade-in pb-[100px]">
           <nav className="flex flex-col gap-6">
             {navLinks.map((link) => {
               const isActive = pathname === link.path || (link.path !== '/' && pathname.startsWith(link.path));
@@ -129,20 +129,33 @@ export default function Navbar() {
                 </Link>
               );
             })}
-            <div className="h-[1px] w-full bg-border my-2"></div>
-            <Link 
-              href="/dashboard/profile"
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="text-lg font-heading font-bold uppercase tracking-wider text-textSecondary hover:text-white flex items-center gap-3"
-            >
-              <span className="material-symbols-rounded">person</span>
-              Profile
-            </Link>
           </nav>
         </div>
       )}
 
-
+      {/* Mobile Bottom Navigation Bar */}
+      <div className="fixed bottom-0 left-0 right-0 z-50 h-[70px] bg-[#0A0D14]/95 backdrop-blur-md border-t border-border flex md:hidden items-center justify-around px-2 pb-2">
+        <Link href="/" className={`flex flex-col items-center gap-1 ${pathname === '/' ? 'text-primary' : 'text-textSecondary'}`}>
+          <span className="material-symbols-rounded text-[24px]">home</span>
+          <span className="text-[10px] font-medium tracking-wide">Home</span>
+        </Link>
+        <Link href="/races" className={`flex flex-col items-center gap-1 ${pathname.startsWith('/races') ? 'text-primary' : 'text-textSecondary'}`}>
+          <span className="material-symbols-rounded text-[24px]">sports_score</span>
+          <span className="text-[10px] font-medium tracking-wide">Races</span>
+        </Link>
+        <Link href="/predictions" className={`flex flex-col items-center gap-1 ${pathname.startsWith('/predictions') ? 'text-primary' : 'text-textSecondary'}`}>
+          <span className="material-symbols-rounded text-[24px]">analytics</span>
+          <span className="text-[10px] font-medium tracking-wide">AI</span>
+        </Link>
+        <Link href="/bulletins" className={`flex flex-col items-center gap-1 ${pathname.startsWith('/bulletins') ? 'text-primary' : 'text-textSecondary'}`}>
+          <span className="material-symbols-rounded text-[24px]">feed</span>
+          <span className="text-[10px] font-medium tracking-wide">Bulletins</span>
+        </Link>
+        <Link href="/dashboard/profile" className={`flex flex-col items-center gap-1 ${pathname.startsWith('/dashboard/profile') ? 'text-primary' : 'text-textSecondary'}`}>
+          <span className="material-symbols-rounded text-[24px]">person</span>
+          <span className="text-[10px] font-medium tracking-wide">Profile</span>
+        </Link>
+      </div>
 
       {/* Modals & Panels */}
       <GlobalSearch isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
