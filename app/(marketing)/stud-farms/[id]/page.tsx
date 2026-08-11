@@ -4,8 +4,9 @@ import { ChevronLeft } from 'lucide-react';
 import { mockStudFarms } from '@/lib/registryMockData';
 import { notFound } from 'next/navigation';
 
-export default function StudFarmProfilePage({ params }: { params: { id: string } }) {
-  const studId = decodeURIComponent(params.id);
+export default async function StudFarmProfilePage({ params }: { params: Promise<{ id: string }> }) {
+  const resolvedParams = await params;
+  const studId = decodeURIComponent(resolvedParams.id);
   const mockStud = mockStudFarms.find(s => s.id === studId) || mockStudFarms[0];
 
   if (!mockStud) {

@@ -5,9 +5,10 @@ import { ChevronLeft, Star, TrendingUp, Trophy, Calendar, Info, Activity } from 
 import { mockHorses } from '@/lib/registryMockData';
 import { notFound } from 'next/navigation';
 
-export default function HorseProfilePage({ params }: { params: { id: string } }) {
+export default async function HorseProfilePage({ params }: { params: Promise<{ id: string }> }) {
+  const resolvedParams = await params;
   // Try to find by slugified name, or default to first horse
-  const horseName = decodeURIComponent(params.id).replace(/-/g, ' ');
+  const horseName = decodeURIComponent(resolvedParams.id).replace(/-/g, ' ');
   const mockHorse = mockHorses.find(h => h.name.toLowerCase() === horseName) || mockHorses[0];
 
   if (!mockHorse) {

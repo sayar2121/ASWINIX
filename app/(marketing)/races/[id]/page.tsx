@@ -4,8 +4,9 @@ import { ChevronLeft } from 'lucide-react';
 import { mockRaces } from '@/lib/registryMockData';
 import { notFound } from 'next/navigation';
 
-export default function RaceProfilePage({ params }: { params: { id: string } }) {
-  const raceId = decodeURIComponent(params.id);
+export default async function RaceProfilePage({ params }: { params: Promise<{ id: string }> }) {
+  const resolvedParams = await params;
+  const raceId = decodeURIComponent(resolvedParams.id);
   const mockRace = mockRaces.find(r => r.id === raceId) || mockRaces[0];
 
   if (!mockRace) {

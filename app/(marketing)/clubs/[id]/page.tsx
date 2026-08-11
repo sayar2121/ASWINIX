@@ -4,8 +4,9 @@ import { ChevronLeft } from 'lucide-react';
 import { mockClubs } from '@/lib/registryMockData';
 import { notFound } from 'next/navigation';
 
-export default function ClubProfilePage({ params }: { params: { id: string } }) {
-  const clubId = decodeURIComponent(params.id);
+export default async function ClubProfilePage({ params }: { params: Promise<{ id: string }> }) {
+  const resolvedParams = await params;
+  const clubId = decodeURIComponent(resolvedParams.id);
   const mockClub = mockClubs.find(c => c.id === clubId) || mockClubs[0];
 
   if (!mockClub) {

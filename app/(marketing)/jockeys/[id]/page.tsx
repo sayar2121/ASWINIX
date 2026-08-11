@@ -4,8 +4,9 @@ import { ChevronLeft } from 'lucide-react';
 import { mockJockeys, mockRaceEntries } from '@/lib/registryMockData';
 import { notFound } from 'next/navigation';
 
-export default function JockeyProfilePage({ params }: { params: { id: string } }) {
-  const jockeyId = decodeURIComponent(params.id);
+export default async function JockeyProfilePage({ params }: { params: Promise<{ id: string }> }) {
+  const resolvedParams = await params;
+  const jockeyId = decodeURIComponent(resolvedParams.id);
   const mockJockey = mockJockeys.find(j => j.id === jockeyId) || mockJockeys[0];
 
   if (!mockJockey) {

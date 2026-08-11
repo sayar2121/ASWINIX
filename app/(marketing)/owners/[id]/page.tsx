@@ -4,8 +4,9 @@ import { ChevronLeft } from 'lucide-react';
 import { mockOwners } from '@/lib/registryMockData';
 import { notFound } from 'next/navigation';
 
-export default function OwnerProfilePage({ params }: { params: { id: string } }) {
-  const ownerId = decodeURIComponent(params.id);
+export default async function OwnerProfilePage({ params }: { params: Promise<{ id: string }> }) {
+  const resolvedParams = await params;
+  const ownerId = decodeURIComponent(resolvedParams.id);
   const mockOwner = mockOwners.find(o => o.id === ownerId) || mockOwners[0];
 
   if (!mockOwner) {
