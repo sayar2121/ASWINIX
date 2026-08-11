@@ -8,6 +8,7 @@ import DailyBulletins from '@/components/sections/DailyBulletins';
 import AppPromoBanner from '@/components/sections/AppPromoBanner';
 import PremiumBanner from '@/components/sections/PremiumBanner';
 import { AnimateIn } from '@/components/ui/AnimateIn';
+import RegistryTotals from '@/components/sections/RegistryTotals';
 
 export default function MarketingPage() {
   return (
@@ -25,6 +26,10 @@ export default function MarketingPage() {
           <FeaturesGrid />
         </AnimateIn>
       </div>
+
+      <AnimateIn direction="up">
+        <RegistryTotals />
+      </AnimateIn>
       
       <section className="container mx-auto px-4 py-8 relative z-10" id="races">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">

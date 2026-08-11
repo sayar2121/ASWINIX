@@ -1,22 +1,22 @@
 import React from 'react';
 import Link from 'next/link';
-import { Search, Filter, Users } from 'lucide-react';
-import { mockJockeys } from '@/lib/registryMockData';
+import { Search, Filter, ShieldCheck } from 'lucide-react';
+import { mockClubs } from '@/lib/registryMockData';
 
-export default function JockeysPage() {
+export default function ClubsPage() {
   return (
     <div className="container mx-auto px-4 py-12 relative z-10">
       <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
         <div className="max-w-2xl">
           <h1 className="text-3xl font-heading font-bold uppercase tracking-wide flex items-center gap-3">
-            <Users className="w-8 h-8 text-primary" />
-            Jockeys
+            <ShieldCheck className="w-8 h-8 text-primary" />
+            Clubs
           </h1>
           <p className="text-textSecondary mt-3 text-sm leading-relaxed">
-            Licensed riders and apprentices.
+            Turf clubs and racing authorities across India.
           </p>
           <div className="mt-2 text-xs text-muted-foreground font-mono bg-muted/50 p-2 rounded-md inline-block">
-            ID PATTERN · JK-[CLUB]-[YEAR]-[SEQ]
+            ID PATTERN · CL-IND-[SEQ]
           </div>
         </div>
         
@@ -25,7 +25,7 @@ export default function JockeysPage() {
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-textSecondary" />
             <input 
               type="text" 
-              placeholder="Search jockeys..." 
+              placeholder="Search clubs..." 
               className="bg-surface border border-border rounded-lg pl-10 pr-4 py-2 text-sm focus:outline-none focus:border-primary transition-colors min-w-[250px]"
             />
           </div>
@@ -41,32 +41,32 @@ export default function JockeysPage() {
             <thead>
               <tr className="bg-surface/50 border-b border-border/50 text-xs text-textSecondary font-medium">
                 <th className="p-4">Registry ID</th>
-                <th className="p-4">Full name</th>
-                <th className="p-4">Nationality</th>
-                <th className="p-4">Licence type</th>
-                <th className="p-4">Licensing club</th>
+                <th className="p-4">Club name</th>
+                <th className="p-4">Short code</th>
+                <th className="p-4">City</th>
+                <th className="p-4">State</th>
                 <th className="p-4">Status</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-border/50">
-              {mockJockeys.map((j) => (
-                <tr key={j.id} className="group hover:bg-surface/30 transition-colors">
+              {mockClubs.map((c) => (
+                <tr key={c.id} className="group hover:bg-surface/30 transition-colors">
                   <td className="p-4 font-mono text-sm">
-                    <Link href={`/jockeys/${j.id}`} className="hover:text-primary transition-colors block w-full h-full">
-                      {j.id}
+                    <Link href={`/clubs/${c.id}`} className="hover:text-primary transition-colors block w-full h-full">
+                      {c.id}
                     </Link>
                   </td>
                   <td className="p-4 font-medium">
-                    <Link href={`/jockeys/${j.id}`} className="hover:text-primary transition-colors block w-full h-full">
-                      {j.name}
+                    <Link href={`/clubs/${c.id}`} className="hover:text-primary transition-colors block w-full h-full">
+                      {c.name}
                     </Link>
                   </td>
-                  <td className="p-4 text-sm">{j.nationality}</td>
-                  <td className="p-4 text-sm">{j.licenseType}</td>
-                  <td className="p-4 text-sm text-primary">{j.licensingClub}</td>
+                  <td className="p-4 text-sm font-mono">{c.shortCode}</td>
+                  <td className="p-4 text-sm">{c.city}</td>
+                  <td className="p-4 text-sm">{c.state}</td>
                   <td className="p-4 text-sm">
-                    <span className={`px-2 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${j.status === 'Active' ? 'bg-green-500/20 text-green-400' : 'bg-red-500/20 text-red-400'}`}>
-                      {j.status}
+                    <span className={`px-2 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${c.status === 'Active' ? 'bg-green-500/20 text-green-400' : 'bg-red-500/20 text-red-400'}`}>
+                      {c.status}
                     </span>
                   </td>
                 </tr>

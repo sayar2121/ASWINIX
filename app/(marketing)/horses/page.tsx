@@ -1,5 +1,6 @@
 import { Search, Filter, Star } from 'lucide-react';
 import Image from 'next/image';
+import Link from 'next/link';
 
 export default function HorsesPage() {
   const horses = [
@@ -71,9 +72,11 @@ export default function HorsesPage() {
               </div>
             </div>
 
-            <button className="w-full py-2.5 rounded-lg border border-border bg-surface text-textPrimary text-xs font-bold uppercase tracking-wider hover:bg-primary hover:border-primary transition-colors">
-              View Full Profile
-            </button>
+            <Link href={`/horses/${encodeURIComponent(horse.name.toLowerCase().replace(/ /g, '-'))}`}>
+              <button className="w-full py-2.5 rounded-lg border border-border bg-surface text-textPrimary text-xs font-bold uppercase tracking-wider hover:bg-primary hover:border-primary transition-colors">
+                View Full Profile
+              </button>
+            </Link>
           </div>
         ))}
       </div>
